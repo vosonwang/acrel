@@ -1,0 +1,9 @@
+vendor
+.idea
+.DS_Store
+.vscode
+pkg
+bin
+*.key
+*.pem
+*.log

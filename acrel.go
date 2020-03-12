@@ -72,7 +72,7 @@ func (frame *Frame) Bytes() []byte {
 	// 添加定界符
 	bytes[0] = startDelimiters
 	bytes[1] = startDelimiters
-	bytes[3] = frame.Function
+	bytes[2] = frame.Function
 
 	bytes = append(bytes, frame.Data...)
 

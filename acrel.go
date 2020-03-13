@@ -33,7 +33,7 @@ type Frame struct {
 func NewFrame(packet []byte) (*Frame, error) {
 	// Check the that the packet length.
 	if len(packet) < 7 {
-		return nil, fmt.Errorf("acrel Frame error: packet less than 7 bytes: 0x% x", packet)
+		return nil, fmt.Errorf("frame error: packet less than 7 bytes: 0x% x", packet)
 	}
 
 	pLen := len(packet)
@@ -49,7 +49,7 @@ func NewFrame(packet []byte) (*Frame, error) {
 	crcCalc := libcrc.CRCModbus(packet[2 : pLen-4])
 
 	if crcCalc != crcExpect {
-		return nil, fmt.Errorf("acrel Frame error: CRC (expected 0x%x, got 0x%x)", crcExpect, crcCalc)
+		return nil, fmt.Errorf("frame error: CRC (expected 0x%x, got 0x%x)", crcExpect, crcCalc)
 	}
 
 	frame := &Frame{
@@ -61,8 +61,8 @@ func NewFrame(packet []byte) (*Frame, error) {
 }
 
 func (frame *Frame) Copy() *Frame {
-	acrelFrame := *frame
-	return &acrelFrame
+	f := *frame
+	return &f
 }
 
 // Bytes returns the MODBUS byte stream based on the Frame fields

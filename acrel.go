@@ -39,8 +39,8 @@ func NewFrame(packet []byte) (*Frame, error) {
 	pLen := len(packet)
 
 	// 检查 Delimiters 定界符
-	if packet[0]&startDelimiters != startDelimiters || packet[1] != packet[0] ||
-		packet[pLen-2]&endDelimiters != endDelimiters || packet[pLen-1] != packet[pLen-2] {
+	if packet[0] != startDelimiters || packet[1] != startDelimiters ||
+		packet[pLen-2] != endDelimiters || packet[pLen-1] != endDelimiters {
 		return nil, fmt.Errorf("定界符错误：0x% x", packet)
 	}
 

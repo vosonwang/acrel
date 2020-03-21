@@ -33,7 +33,7 @@ type Frame struct {
 func NewFrame(packet []byte) (*Frame, error) {
 	// Check the that the packet length.
 	if len(packet) < 7 {
-		return nil, fmt.Errorf("frame error: packet less than 7 bytes: 0x% x", packet)
+		return nil, fmt.Errorf("acrel: frame error: packet less than 7 bytes: 0x% x", packet)
 	}
 
 	pLen := len(packet)
@@ -41,7 +41,7 @@ func NewFrame(packet []byte) (*Frame, error) {
 	// 检查 Delimiters 定界符
 	if packet[0] != startDelimiters || packet[1] != startDelimiters ||
 		packet[pLen-2] != endDelimiters || packet[pLen-1] != endDelimiters {
-		return nil, fmt.Errorf("定界符错误：0x% x", packet)
+		return nil, fmt.Errorf("acrel: 定界符错误：0x% x", packet)
 	}
 
 	// Check the CRC.
@@ -49,7 +49,7 @@ func NewFrame(packet []byte) (*Frame, error) {
 	crcCalc := libcrc.CRCModbus(packet[2 : pLen-4])
 
 	if crcCalc != crcExpect {
-		return nil, fmt.Errorf("frame error: CRC (expected 0x%x, got 0x%x)", crcExpect, crcCalc)
+		return nil, fmt.Errorf("acrel: frame error: CRC (expected 0x%x, got 0x%x)", crcExpect, crcCalc)
 	}
 
 	frame := &Frame{

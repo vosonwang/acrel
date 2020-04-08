@@ -66,7 +66,7 @@ func (frame *Frame) Copy() *Frame {
 }
 
 // Bytes returns the MODBUS byte stream based on the Frame fields
-func (frame *Frame) Bytes() []byte {
+func (frame *Frame) Bytes(crcOrder binary.ByteOrder) []byte {
 	bytes := make([]byte, 3)
 
 	// 添加定界符
@@ -82,7 +82,7 @@ func (frame *Frame) Bytes() []byte {
 
 	// Add the CRC.
 	bytes = append(bytes, []byte{0, 0}...)
-	binary.LittleEndian.PutUint16(bytes[pLen:pLen+2], crc)
+	crcOrder.PutUint16(bytes[pLen:pLen+2], crc)
 
 	bytes = append(bytes, endDelimiters, endDelimiters)
 	return bytes
